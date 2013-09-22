@@ -47,7 +47,7 @@ $(document).ready(function(){
   // Tryit JsSIP data.
   var tryit_sip_domain = "tryit.jssip.net";
   var tryit_ws_uri = "ws://ws.tryit.jssip.net:10080";
-  var invitation_link_pre = "http://tryit.jssip.net?invited-by="
+  var invitation_link_pre = "http://tryit.jssip.net?invited-by=";
 
 
   // Initialization.
@@ -154,7 +154,12 @@ $(document).ready(function(){
     case "login_login_use_trit_account":
       balloon_text = "<p>Click here to generate an account at our SIP and WebSocket servers</p><p>...and just enjoy!</p>";
       break;
+    default:
+      balloon_text = null;
     }
+    
+    if(!balloon_text)
+    	return null;
 
     return {
       contents: balloon_text,
@@ -250,7 +255,7 @@ $(document).ready(function(){
         // To JSON (in case of a simple string we must enclose between ").
         if (ws_servers) {
           if (ws_servers.charAt(0) != "[")
-            ws_servers = '"' + ws_servers + '"'
+            ws_servers = '"' + ws_servers + '"';
           ws_servers = window.JSON.parse(ws_servers);
         }
       }
@@ -276,14 +281,14 @@ $(document).ready(function(){
       // To JSON (in case of a simple string we must enclose between ").
       if (stun_servers) {
         if (stun_servers.charAt(0) != "[")
-          stun_servers = '"' + stun_servers + '"'
+          stun_servers = '"' + stun_servers + '"';
         stun_servers = window.JSON.parse(stun_servers);
       }
       var turn_servers = $("#advanced-settings-form input[name$='turn_servers']").val();
       // To JSON (in case of a simple string we must enclose between ").
       if (turn_servers) {
         if (turn_servers.charAt(0) != "[")
-          turn_servers = '"' + turn_servers + '"'
+          turn_servers = '"' + turn_servers + '"';
         turn_servers = window.JSON.parse(turn_servers);
       }
       var use_preloaded_route = $("#advanced-settings-form input[name$='use_preloaded_route']").is(':checked');
@@ -413,11 +418,11 @@ $(document).ready(function(){
 
     // Call/Message reception callbacks
     MyPhone.on('newRTCSession', function(e) {
-      GUI.new_session(e)
+      GUI.new_session(e);
     });
 
     MyPhone.on('newMessage', function(e) {
-      GUI.new_message(e)
+      GUI.new_message(e);
     });
 
     // Registration/Deregistration callbacks
@@ -433,7 +438,7 @@ $(document).ready(function(){
 
         $(invited_session).find(".chat > input[type='text']").val("Hi there, you have invited me to call you :)");
         var e = jQuery.Event("keydown");
-        e.which = 13  // Enter
+        e.which = 13;  // Enter
         $(invited_session).find(".chat > input[type='text']").trigger(e);
         $(invited_session).find(".chat > input[type='text']").focus();
       }
@@ -452,7 +457,7 @@ $(document).ready(function(){
         alert("SIP registration error:\n" + e.data.cause);
       }
       else {
-        alert("SIP registration error:\n" + e.data.response.status_code.toString() + " " + e.data.response.reason_phrase)
+        alert("SIP registration error:\n" + e.data.response.status_code.toString() + " " + e.data.response.reason_phrase);
       }
       if (! window.CustomJsSIPSettings) { window.location.reload(false); }
     });
