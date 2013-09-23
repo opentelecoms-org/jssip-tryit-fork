@@ -127,6 +127,17 @@ div.balloonInvitationTip a:hover {
 
 
 
+/************** requirements-* errors ************/
+/**************************************/
+
+#requirements-webrtc {
+  display: none;
+  position: relative;
+  margin: 20px auto 0 auto;
+  width: 400px;
+  z-index: 10;
+}
+
 /************** login-page ************/
 /**************************************/
 #login-full-background {

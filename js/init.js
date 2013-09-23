@@ -21,6 +21,8 @@ $(document).ready(function(){
   var ws_servers = null;
 
   var ws_was_connected = false;
+  
+  var req_webrtc = $("#requirements-webrtc");
 
   var login_form = $("#login-form");
   var login_inputs = $("#login-form input");
@@ -49,6 +51,48 @@ $(document).ready(function(){
   var tryit_ws_uri = "ws://ws.tryit.jssip.net:10080";
   var invitation_link_pre = "http://tryit.jssip.net?invited-by=";
 
+  // Does the browser support WebRTC?  If not, tell user to upgrade the browser
+  var has_WebRTC = false;
+  try {
+    if(RTCPeerConnection) {
+      has_WebRTC = true;
+        console.log("RTCPeerConnection found");
+    } else {
+      console.log("RTCPeerConnection not found");
+    }
+  } catch (err) {
+    console.log("RTCPeerConnection not found: " + err.name + ": " + err.message);
+  }
+  try {
+    if(webkitRTCPeerConnection) {
+      has_WebRTC = true;
+      console.log("webkitRTCPeerConnection found");
+    } else {
+      console.log("webkitRTCPeerConnection not found");
+    }
+  } catch (err) {
+    console.log("webkitRTCPeerConnection not found: " + err.name + ": " + err.message);
+  }
+  try {
+    if(mozRTCPeerConnection) {
+      has_WebRTC = true;
+      console.log("mozRTCPeerConnection found");
+    } else {
+      console.log("mozRTCPeerConnection not found");
+    }
+  } catch (err) {
+    console.log("mozRTCPeerConnection not found: " + err.name + ": " + err.message);
+  }
+  if(has_WebRTC) {
+    console.log("at least one variety of WebRTC support detected, proceeding");
+  } else {
+    console.log("no WebRTC capability detected, aborting");
+    req_webrtc.fadeIn(200);
+    login_advanced_settings_link.hide();
+    login_use_trit_account_link.hide();
+    login_form.hide();
+    return;
+  }
 
   // Initialization.
   login_display_name.focus();
