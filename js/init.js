@@ -46,6 +46,8 @@ $(document).ready(function(){
   var theme03 = $("#themes > div.theme03");
   var theme04 = $("#themes > div.theme04");
 
+  var currentURL = parseUri(window.location.toString());
+
   // Tryit JsSIP data.
   var tryit_sip_domain = "tryit.jssip.net";
   var tryit_ws_uri = "ws://ws.tryit.jssip.net:10080";
@@ -172,6 +174,26 @@ $(document).ready(function(){
     login_ws_servers.val(CustomJsSIPSettings.ws_servers);
 
     login_form.submit();
+
+    // A destination to dial automatically can be
+    // specified by putting the dial property in custom.js
+    // or as a URL parameter.  The URL parameter takes priority
+    // but it is only looked at if custom.js exists and provides sufficient
+    // configuration to log in and make the call.
+    // It is permitted to specify just the username part of a URI
+    // or both the full username and hostname, for example:
+    //
+    //    ?dial=bob
+    //    ?dial=bob%40example.org        for bob@example.org
+    //
+    var autoDialTarget = CustomJsSIPSettings.dial;
+    if(currentURL.queryKey["dial"]) {
+      autoDialTarget = decodeURIComponent(currentURL.queryKey["dial"]);
+    }
+    if(autoDialTarget) {
+      phone_dialed_number_screen.val(autoDialTarget);
+      GUI.phoneCallButtonPressed();
+    }
   }
 
 
@@ -262,7 +284,6 @@ $(document).ready(function(){
 
 
   // If it's an invitation automatically log-in.
-  var currentURL = parseUri(window.location.toString());
   var invitedBy = currentURL.queryKey["invited-by"];
   if (invitedBy) {
     showFormFromInvitation();

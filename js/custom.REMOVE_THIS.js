@@ -47,6 +47,7 @@
 // documentation at http://jssip.net/documentation/devel/api/ua_configuration_parameters/
 //
 // CustomJsSIPSettings = {
+//   dial: null,
 //   uri: null,
 //   password: null,
 //   ws_servers: null,
