@@ -8,6 +8,7 @@ $(document).ready(function(){
   phone_dialed_number_screen = $("#phone > .controls  input.destination");
   phone_call_button = $("#phone > .controls > .dialbox > .dial-buttons > .call");
   phone_chat_button = $("#phone > .controls > .dialbox > .dial-buttons > .chat");
+  phone_dialpad = $("#phone > .controls > .dialpad");
   phone_dialpad_button = $("#phone > .controls > .dialpad .button");
   soundPlayer = document.createElement("audio");
   soundPlayer.volume = 1;
@@ -168,6 +169,11 @@ $(document).ready(function(){
   if (window.CustomJsSIPSettings) {
     console.info("*** CustomJsSIPSettings found in js/custom.js, bypassing login form...");
 
+    if("show_dialpad" in CustomJsSIPSettings) {
+       if(!CustomJsSIPSettings.show_dialpad) {
+          phone_dialpad.hide();
+       }
+    }
     login_display_name.val(CustomJsSIPSettings.display_name);
     login_sip_uri.val(CustomJsSIPSettings.uri);
     login_sip_password.val(CustomJsSIPSettings.password);

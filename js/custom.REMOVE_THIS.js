@@ -48,6 +48,7 @@
 //
 // CustomJsSIPSettings = {
 //   dial: null,
+//   show_dialpad: false,
 //   uri: null,
 //   password: null,
 //   ws_servers: null,
