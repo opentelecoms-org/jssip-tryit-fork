@@ -601,16 +601,6 @@ $(document).ready(function(){
       $("body").addClass("bg04");
     });
 
-
-    // Piwik stuff
-
-    try {
-      var piwikTracker = Piwik.getTracker("http://www.aliax.net/piwik/piwik.php", 6);
-      var piwikData = sip_uri + " | " + ws_servers;
-      piwikTracker.setCustomVariable(3, "data", piwikData, "page");
-      piwikTracker.trackPageView();
-      piwikTracker.enableLinkTracking();
-    } catch( err ) {}
   }
 
 });
